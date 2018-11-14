@@ -1,0 +1,138 @@
+<%- include('includes/header') %>
+
+<!-- Conteúdo da página -->
+<div class="container">
+  <div class="row">
+    <!-- Coluna do conteúdo -->
+    <div class="col-lg-12">
+      <h3 class="mt-3 display-4">Editar Informações do Caso</h3><hr>
+
+      <% if(validationError.length > 0){ %>
+  		<div class="alert alert-danger">
+  			<strong>Atenção!</strong>
+  			<ul>
+  				<% for(var i = 0; i < validationError.length; i++){ %>
+  					<li class="text-danger"><%= validationError[i].msg %></li>
+  				<% } %>
+  			</ul>
+  		</div>
+  	  <% } %>
+
+      <h4 class="mt-3 display-6">Detalhes do Usuário</h3><br>
+
+      <strong>Nome do Usuário: </strong><span><%= caseInfo[0].nome_usuario %></span><br>
+      <strong>Nome do Responsável: </strong><span><%= caseInfo[0].nome_responsavel %></span><br>
+      <strong>Endereço: </strong><span><%= caseInfo[0].endereco_rua %> - <%= caseInfo[0].endereco_bairro %></span><br>
+      <strong>Telefone: </strong><span><%= caseInfo[0].telefone %></span><br>
+      <strong>Sexo: </strong><span><%= (caseInfo[0].sexo === 'M' ? 'Masculino' : 'Feminino') %></span><br>
+      <strong>Data de Nascimento: </strong><span><%= caseInfo[0].data_nascimento %></span> <strong>Idade: </strong><span><%= caseInfo[0].idade %> anos</span><br>
+      <strong>Identificação: </strong><span><%= caseInfo[0].identificacao %></span><br><hr>
+
+      <h4 class="mt-3 display-6">Detalhes do Caso</h3><br>
+
+      <form method="post" action="/cases/save">
+
+        <input type="hidden" name="id_caso" value="<%= caseInfo[0].id_caso %>" >
+        <input type="hidden" name="id_usuario" value="<%= caseInfo[0].id_usuario %>" >
+
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="numero_processo">Número do Processo</label>
+            <input type="text" class="form-control" id="numero_processo" name="numero_processo" placeholder="" value="<%= caseInfo[0].numero_caso %>" required>
+          </div>
+          <div class="col-md-9 mb-3">
+            <label for="violacao_direitos">Violação dos Direitos</label>
+            <input type="text" class="form-control" id="violacao_direitos" name="violacao_direitos" placeholder="" value="<%= caseInfo[0].violacao %>">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="data_inclusao">Data de Inclusão</label>
+            <input type="date" class="form-control" id="data_inclusao" name="data_inclusao" value="<%= caseInfo[0].data_inclusao %>">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="data_desligamento">Data de Desligamento</label>
+            <input type="date" class="form-control" id="data_desligamento" name="data_desligamento" value="<%= caseInfo[0].data_desligamento %>">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="encaminhamento">Encaminhamento</label>
+          <input type="text" class="form-control" id="encaminhamento" name="encaminhamento" placeholder="" value="<%= caseInfo[0].encaminhamento %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="situacao">Situação</label>
+          <input type="text" class="form-control" id="situacao" name="situacao" placeholder="" value="<%= caseInfo[0].situacao %>">
+        </div>
+        <hr class="mb-4">
+        <input class="btn btn-success btn-lg btn-block mb-4" type="submit" value="Salvar Informações" />
+      </form>
+      <hr>
+      <!-- Caixa de histórico de atendimento -->
+      <div class="card  mb-3">
+        <div class="card-header">
+          <h4 class="mb-0">Histórico de Atendimento</h4><a class="text-right" href="#" data-toggle="modal" data-target="#addHistoricoAtendimento">Adicionar Informação</a>
+        </div>
+        <div class="card-body">
+          <div id="accordion">
+            <% for(var i = 0; i < caseObservations.length; i++){%>
+              <div class="card mb-2">
+                <div class="" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= caseObservations[i].id %>" aria-expanded="false" aria-controls="collapse<%= caseObservations[i].id %>">
+                      Entrada Número: <%= caseObservations[i].id %> | Data de Atendimento: <%= caseObservations[i].data_atendimento %>
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapse<%= caseObservations[i].id %>" class="collapse" aria-labelledby="collapse<%= caseObservations[i].id %>" data-parent="#accordion">
+                  <div class="card-body">
+                    <%= caseObservations[i].observacao %>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+          </div>
+        </div>
+
+      </div>
+      <!-- Caixa de histórico de atendimento -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal form adicionar histório de atendimento -->
+<div class="modal fade" id="addHistoricoAtendimento" tabindex="-1" role="dialog" aria-labelledby="addHistoricoAtendimentoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addHistoricoAtendimentoLabel">Adicionar Informação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="" action="/case/observation/save" method="post">
+          <div class="mb-3">
+            <input type="hidden" name="id_caso" value="<%= caseInfo[0].id_caso %>" >
+            <label for="data_atendimento">Data do Atendimento</label>
+            <input type="date" class="form-control col-md-4" id="data_atendimento" name="data_atendimento" placeholder="" value="">
+          </div>
+          <div class="mb-3">
+            <label for="observacao">Observação</label>
+            <textarea class="form-control" cols="5" rows="5" name="observacao"></textarea>
+          </div>
+
+          <input class="btn btn-success" type="submit" value="Salvar" />
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal form adicionar histório de atendimento -->
+
+<%- include('includes/footer') %>

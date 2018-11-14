@@ -1,0 +1,85 @@
+<%- include('includes/header') %>
+
+<!-- Conteúdo da página -->
+<div class="container">
+  <div class="row">
+    <!-- Coluna do conteúdo -->
+    <div class="col-lg-12">
+      <h3 class="mt-3 display-4">Adicionar Novo Usuário</h3><hr>
+
+	  <% if(validationError.length > 0){ %>
+		<div class="alert alert-danger">
+			<strong>Atenção!</strong>
+			<ul>
+				<% for(var i = 0; i < validationError.length; i++){ %>
+					<li class="text-danger"><%= validationError[i].msg %></li>
+				<% } %>
+			</ul>
+		</div>
+	  <% } %>
+
+      <form method="post" action="/users/save">
+
+        <input type="hidden" name="id_usuario" value="0" >
+
+        <div class="mb-3">
+          <label for="nome">Nome Completo</label>
+          <input type="text" class="form-control" id="nome" name="nome" placeholder="" value="<%= user.nome %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="nome_responsavel">Nome do Responsável</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="nome_responsavel" name="nome_responsavel" placeholder="" value="<%= user.nome_responsavel %>" >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 mb-3">
+            <label for="endereco_rua">Endereço</label>
+            <input type="text" class="form-control" id="endereco_rua" name="endereco_rua" placeholder="" value="<%= user.endereco_rua %>">
+          </div>
+          <div class="col-md-5 mb-3">
+            <label for="endereco_bairro">Bairro</label>
+            <input type="text" class="form-control" id="endereco_bairro" name="endereco_bairro" placeholder="" value="<%= user.endereco_bairro %>">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="telefone">Telefone <span class="text-muted">(Somente números)</span></label>
+            <input type="text" class="form-control" id="telefone" name="telefone" value="<%= user.telefone %>">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="sexo">Sexo</label>
+            <select class="custom-select d-block w-100" id="sexo" name="sexo">
+              <option>Masculino</option>
+              <option>Feminino</option>
+            </select>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="data_nascimento">Data de Nascimento</label>
+            <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="<%= user.data_nascimento %>">
+          </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="identificacao">Identificação</label>
+        <select class="custom-select d-block w-100" id="identificacao" name="identificacao">
+          <option>Criança</option>
+          <option>Deficiente</option>
+          <option>Idoso</option>
+          <option>Morador de Rua</option>
+          <option>Mulher</option>
+        </select>
+      </div>
+        <hr class="mb-4">
+        <input class="btn btn-success btn-lg btn-block mb-4" type="submit" value="Salvar Informações" />
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>

@@ -1,0 +1,85 @@
+<%- include('includes/header') %>
+
+<!-- Conteúdo da página -->
+<div class="container">
+  <div class="row">
+    <!-- Coluna do conteúdo -->
+    <div class="col-lg-12">
+      <h3 class="mt-3 display-4"><%= pageTitle %></h3><hr>
+
+      <!-- Caixa de busca -->
+      <div class="card my-4">
+        <h5 class="card-header">Buscar Informações</h5>
+        <div class="card-body">
+          <form method="get" action="/cases/search">
+            <div class="input-group">
+              <input type="text" class="form-control m-1" id="case_number" name="case_number" placeholder="Nº do Processo...">
+              <span class="input-group-btn">
+                <input type="submit" class="btn btn-secondary m-1" value="Pesquisar" />
+              </span>
+            </div>
+            </form>
+              <div class="input-group">
+                <a class="ml-1" data-toggle="collapse" href="#dateSearch" role="button" aria-expanded="false" aria-controls="collapseExample">Buscar por período</a><span class="ml-1">|</span>
+                <a class="ml-1" href="/cases/opened">Exibir Casos Ligados</a><span class="ml-1">|</span>
+                <a class="ml-1" href="/cases">Exibir Todos</a>
+              </div>
+            <form method="get" action="/cases/search/date">
+            <div id="dateSearch" class="input-group collapse">
+
+              <select class="form-control col-sm-3 m-1" id="field" name="field">
+                <option>Data de Inclusão</option>
+                <option>Data de Desligamento</option>
+              </select>
+              <label for="initial_date" class="pt-2">Data Inicial</label>
+              <input type="date" class="form-control col-sm-2 m-1" id="initial_date" name="initial_date" value="">
+              <label for="final_date" class="pt-2">Data Final</label>
+              <input type="date" class="form-control col-sm-2 m-1" id="final_date" name="final_date" value="">
+              <span class="input-group-btn">
+                <input type="submit" class="btn btn-secondary m-1" value="Pesquisar" />
+              </span>
+
+            </div>
+            </form>
+        </div>
+      </div>
+      <!-- Caixa de busca -->
+
+      <p class="text-right"><strong>Total de registros encontrados:</strong> <%= cases.length %></p>
+      
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr class="text-center">
+              <th>ID</th>
+              <th>N˚ PROCESSO</th>
+              <th>USUÁRIO</th>
+              <th>DATA DE INCLUSÃO</th>
+              <th>DATA DE DESLIGAMENTO</th>
+              <th>ENCAMINHAMENTO</th>
+              <th>SITUAÇÃO</th>
+              <th>AÇÕES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(var i = 0; i < cases.length; i++){ %>
+            <tr class="text-center">
+              <td><%= cases[i].id_caso %></td>
+              <td><%= cases[i].numero_caso %></td>
+              <td><%= cases[i].nome_usuario %></td>
+              <td><%= cases[i].data_inclusao %></td>
+              <td><%= cases[i].data_desligamento %></td>
+              <td><%= cases[i].encaminhamento %></td>
+              <td><%= cases[i].situacao %></td>
+              <td><a href="/cases/edit?case_id=<%= cases[i].id_caso %>">Detalhes</a></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <!-- Tabela de usuários -->
+    </div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>

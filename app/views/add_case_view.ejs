@@ -1,0 +1,99 @@
+<%- include('includes/header') %>
+
+<!-- Conteúdo da página -->
+<div class="container">
+  <div class="row">
+    <!-- Coluna do conteúdo -->
+    <div class="col-lg-12">
+      <h3 class="mt-3 display-4">Adicionar Novo Caso</h3><hr>
+
+	  <% if(validationError.length > 0){ %>
+		<div class="alert alert-danger">
+			<strong>Atenção!</strong>
+			<ul>
+				<% for(var i = 0; i < validationError.length; i++){ %>
+					<li class="text-danger"><%= validationError[i].msg %></li>
+				<% } %>
+			</ul>
+		</div>
+    <% } %>
+    
+    <%
+      console.log(users[0].nome + ', ' + users[1].nome + ', ' + users[2].nome + ', ' + users[3].nome);
+      users.sort(function(a, b){
+        var nomeA = a.nome.toLowerCase(), nomeB = b.nome.toLowerCase();
+        if(nomeA < nomeB) return -1;
+        if(nomeA > nomeB) return 1;
+        return 0;
+      });
+      console.log('fez o sort?');
+      console.log(users[0].nome + ', ' + users[1].nome + ', ' + users[2].nome + ', ' + users[3].nome);
+    %>
+
+      <form method="post" action="/cases/save">
+        <%
+          /* Ordena a lista de usuários por ordem alfabética */
+          if(users.length > 0){
+            users.sort(function(a, b){
+              var nomeA = a.nome.toLowerCase(), nomeB = b.nome.toLowerCase();
+              if(nomeA < nomeB) return -1;
+              if(nomeA > nomeB) return 1;
+              return 0;
+            });
+          }
+        %>
+        
+
+        <input type="hidden" name="id_caso" value="0" >
+        <input type="hidden" name="id_usuario" value="0" >
+
+        <div class="mb-3">
+          <label for="usuario">Usuário Atrelado ao Caso</label>
+          <select class="custom-select d-block w-100" id="usuario" name="usuario">
+            <option>SELECIONE UM USUÁRIO</option>
+            <% for(var i = 0; i < users.length; i++){ %>
+              <option><%= users[i].nome %></option>
+            <% } %>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="numero_processo">Número do Processo</label>
+            <input type="text" class="form-control" id="numero_processo" name="numero_processo" placeholder="" value="<%= caseInfo.numero_processo %>">
+          </div>
+          <div class="col-md-9 mb-3">
+            <label for="violacao_direitos">Violação dos Direitos</label>
+            <input type="text" class="form-control" id="violacao_direitos" name="violacao_direitos" placeholder="" value="<%= caseInfo.violacao_direitos %>">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="data_inclusao">Data de Inclusão</label>
+            <input type="date" class="form-control" id="data_inclusao" name="data_inclusao" value="<%= caseInfo.data_inclusao %>">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="data_desligamento">Data de Desligamento</label>
+            <input type="date" class="form-control" id="data_desligamento" name="data_desligamento" value="<%= caseInfo.data_desligamento %>">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="encaminhamento">Encaminhamento</label>
+          <input type="text" class="form-control" id="encaminhamento" name="encaminhamento" placeholder="" value="<%= caseInfo.encaminhamento %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="situacao">Situação</label>
+          <input type="text" class="form-control" id="situacao" name="situacao" placeholder="" value="<%= caseInfo.situacao %>">
+        </div>
+        <hr class="mb-4">
+        <input class="btn btn-success btn-lg btn-block mb-4" type="submit" value="Salvar Informações" />
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>
