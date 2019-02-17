@@ -5,69 +5,154 @@
   <div class="row">
     <!-- Coluna do conteúdo -->
     <div class="col-lg-12">
-      <h3 class="mt-3 display-4">Editar Cadastro de Usuário</h3><hr>
+      <h3 class="mt-3 display-4">Editar Cadastro de Usuário</h3>
+      <hr />
 
       <% if(validationError.length > 0){ %>
-  		<div class="alert alert-danger">
-  			<strong>Atenção!</strong>
-  			<ul>
-  				<% for(var i = 0; i < validationError.length; i++){ %>
-  					<li class="text-danger"><%= validationError[i].msg %></li>
-  				<% } %>
-  			</ul>
-  		</div>
-  	  <% } %>
+      <div class="alert alert-danger">
+        <strong>Atenção!</strong>
+        <ul>
+          <% for(var i = 0; i < validationError.length; i++){ %>
+          <li class="text-danger"><%= validationError[i].msg %></li>
+          <% } %>
+        </ul>
+      </div>
+      <% } %>
 
-        <form method="post" action="/users/save">
+      <form method="post" action="/users/save">
+        <input type="hidden" name="id_usuario" value="<%= user[0].id %>" />
 
-          <input type="hidden" name="id_usuario" value="<%= user[0].id %>" >
+        <div class="mb-3">
+          <label for="nome">Nome Completo</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nome"
+            name="nome"
+            placeholder=""
+            value="<%= user[0].nome %>"
+            required
+          />
+        </div>
 
-          <div class="mb-3">
-            <label for="nome">Nome Completo</label>
-            <input type="text" class="form-control" id="nome" name="nome" placeholder="" value="<%= user[0].nome %>" required>
+        <div class="mb-3">
+          <label for="nome_responsavel">Nome do Responsável</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              id="nome_responsavel"
+              name="nome_responsavel"
+              placeholder=""
+              value="<%= user[0].nome_responsavel %>"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 mb-3">
+            <label for="endereco_rua">Endereço</label>
+            <input
+              type="text"
+              class="form-control"
+              id="endereco_rua"
+              name="endereco_rua"
+              placeholder=""
+              value="<%= user[0].endereco_rua %>"
+              required
+            />
+          </div>
+          <div class="col-md-5 mb-3">
+            <label for="endereco_bairro">Bairro</label>
+            <input
+              type="text"
+              class="form-control"
+              id="endereco_bairro"
+              name="endereco_bairro"
+              placeholder=""
+              value="<%= user[0].endereco_bairro %>"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="telefone"
+              >Telefone <span class="text-muted">(Somente números)</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="telefone"
+              name="telefone"
+              value="<%= user[0].telefone %>"
+            />
           </div>
 
-          <div class="mb-3">
-            <label for="nome_responsavel">Nome do Responsável</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="nome_responsavel" name="nome_responsavel" placeholder="" value="<%= user[0].nome_responsavel %>" required>
-            </div>
+          <div class="col-md-4 mb-3">
+            <label for="sexo">Sexo</label>
+            <select class="custom-select d-block w-100" id="sexo" name="sexo">
+              <option>Masculino</option>
+              <option>Feminino</option>
+            </select>
           </div>
 
-          <div class="row">
-            <div class="col-md-7 mb-3">
-              <label for="endereco_rua">Endereço</label>
-              <input type="text" class="form-control" id="endereco_rua" name="endereco_rua" placeholder="" value="<%= user[0].endereco_rua %>" required>
-            </div>
-            <div class="col-md-5 mb-3">
-              <label for="endereco_bairro">Bairro</label>
-              <input type="text" class="form-control" id="endereco_bairro" name="endereco_bairro" placeholder="" value="<%= user[0].endereco_bairro %>" required>
-            </div>
+          <div class="col-md-4 mb-3">
+            <label for="data_nascimento">Data de Nascimento</label>
+            <input
+              type="date"
+              class="form-control"
+              id="data_nascimento"
+              name="data_nascimento"
+              value="<%= user[0].data_nascimento %>"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="escolaridade">Escolaridade</label>
+            <input
+              type="text"
+              class="form-control"
+              id="escolaridade"
+              name="escolaridade"
+              value="<%= user[0].escolaridade %>"
+            />
           </div>
 
-          <div class="row">
-            <div class="col-md-4 mb-3">
-              <label for="telefone">Telefone <span class="text-muted">(Somente números)</span></label>
-              <input type="text" class="form-control" id="telefone" name="telefone" value="<%= user[0].telefone %>">
-            </div>
+          <div class="col-md-4 mb-3">
+            <label for="religiao">Religião</label>
+            <input
+              type="text"
+              class="form-control"
+              id="religiao"
+              name="religiao"
+              value="<%= user[0].religiao %>"
+            />
+          </div>
 
-            <div class="col-md-4 mb-3">
-              <label for="sexo">Sexo</label>
-              <select class="custom-select d-block w-100" id="sexo" name="sexo">
-                <option>Masculino</option>
-                <option>Feminino</option>
-              </select>
-            </div>
-
-            <div class="col-md-4 mb-3">
-              <label for="data_nascimento">Data de Nascimento</label>
-              <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="<%= user[0].data_nascimento %>">
-            </div>
+          <div class="col-md-4 mb-3">
+            <label for="religiao">Ano</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ano"
+              name="ano"
+              value="<%= user[0].ano %>"
+            />
+          </div>
         </div>
 
         <div class="mb-3">
           <label for="identificacao">Identificação</label>
-          <select class="custom-select d-block w-100" id="identificacao" name="identificacao">
+          <select
+            class="custom-select d-block w-100"
+            id="identificacao"
+            name="identificacao"
+          >
             <option>Criança</option>
             <option>Deficiente</option>
             <option>Idoso</option>
@@ -75,9 +160,19 @@
             <option>Mulher</option>
           </select>
         </div>
-          <hr class="mb-4">
-          <input class="btn btn-success btn-lg btn-block mb-4" type="submit" value="Salvar Informações" />
-        </form>
+        <div class="mb-3">
+          <label for="beneficios">Benefícios</label>
+          <textarea class="form-control" id="beneficios" name="beneficios">
+<%= user[0].beneficios %></textarea
+          >
+        </div>
+        <hr class="mb-4" />
+        <input
+          class="btn btn-success btn-lg btn-block mb-4"
+          type="submit"
+          value="Salvar Informações"
+        />
+      </form>
     </div>
   </div>
 </div>

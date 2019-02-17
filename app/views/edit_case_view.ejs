@@ -20,13 +20,17 @@
 
       <h4 class="mt-3 display-6">Detalhes do Usuário</h3><br>
 
+      <strong>Ano: </strong><span><%= caseInfo[0].ano %></span><br>
       <strong>Nome do Usuário: </strong><span><%= caseInfo[0].nome_usuario %></span><br>
       <strong>Nome do Responsável: </strong><span><%= caseInfo[0].nome_responsavel %></span><br>
       <strong>Endereço: </strong><span><%= caseInfo[0].endereco_rua %> - <%= caseInfo[0].endereco_bairro %></span><br>
       <strong>Telefone: </strong><span><%= caseInfo[0].telefone %></span><br>
       <strong>Sexo: </strong><span><%= (caseInfo[0].sexo === 'M' ? 'Masculino' : 'Feminino') %></span><br>
       <strong>Data de Nascimento: </strong><span><%= caseInfo[0].data_nascimento %></span> <strong>Idade: </strong><span><%= caseInfo[0].idade %> anos</span><br>
-      <strong>Identificação: </strong><span><%= caseInfo[0].identificacao %></span><br><hr>
+      <strong>Escolaridade: </strong><span><%= caseInfo[0].escolaridade %></span><br>
+      <strong>Religião: </strong><span><%= caseInfo[0].religiao %></span><br>
+      <strong>Identificação: </strong><span><%= caseInfo[0].identificacao %></span><br>
+      <strong>Beneficios: </strong><span><%= caseInfo[0].beneficios %></span><br><hr>
 
       <h4 class="mt-3 display-6">Detalhes do Caso</h3><br>
 
@@ -36,14 +40,18 @@
         <input type="hidden" name="id_usuario" value="<%= caseInfo[0].id_usuario %>" >
 
         <div class="row">
-          <div class="col-md-3 mb-3">
+          <div class="col-md-2 mb-3">
             <label for="numero_processo">Número do Processo</label>
             <input type="text" class="form-control" id="numero_processo" name="numero_processo" placeholder="" value="<%= caseInfo[0].numero_caso %>" required>
           </div>
-          <div class="col-md-9 mb-3">
+          <div class="col-md-6 mb-3">
             <label for="violacao_direitos">Violação dos Direitos</label>
             <input type="text" class="form-control" id="violacao_direitos" name="violacao_direitos" placeholder="" value="<%= caseInfo[0].violacao %>">
           </div>
+          <div class="col-md-4 mb-3">
+              <label for="nome_agressor">Agressor</label>
+              <input type="text" class="form-control" id="nome_agressor" name="nome_agressor" placeholder="" value="<%= caseInfo[0].nome_agressor %>">
+            </div>
         </div>
 
         <div class="row">
@@ -67,6 +75,10 @@
           <label for="situacao">Situação</label>
           <input type="text" class="form-control" id="situacao" name="situacao" placeholder="" value="<%= caseInfo[0].situacao %>">
         </div>
+        <div class="mb-3">
+          <label for="consequencias">Consequências</label>
+          <textarea class="form-control" id="consequencias" name="consequencias"><%= caseInfo[0].consequencias %></textarea>
+      </div>
         <hr class="mb-4">
         <input class="btn btn-success btn-lg btn-block mb-4" type="submit" value="Salvar Informações" />
       </form>

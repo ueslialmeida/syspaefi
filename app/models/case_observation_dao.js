@@ -8,7 +8,6 @@ caseObservationDao.prototype.saveObservation = function(observationInfo, callbac
   var caseId = observationInfo.id_caso;
   var observacao = observationInfo.observacao;
   var dataAtendimento = observationInfo.data_atendimento;
-  console.log("INSERT INTO historico_atendimento (id_caso, observacao, data_atendimento) VALUES (" + caseId + ",  '" + observacao + "', '" + dataAtendimento + "');");
   this._connection.query("INSERT INTO historico_atendimento (id_caso, observacao, data_atendimento) VALUES (" + caseId + ", '" + observacao + "', '" + dataAtendimento + "');", callback);
 }
 
